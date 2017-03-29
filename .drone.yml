@@ -9,8 +9,8 @@ pipeline:
     image: docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-  commands:
-    - docker run johnAd186/example-webserver:$DRONE_COMMIT_SHA /test.sh
+    commands:
+      - docker run johnAd186/example-webserver:$DRONE_COMMIT_SHA /test.sh
   push:
     image: docker
     volumes:
