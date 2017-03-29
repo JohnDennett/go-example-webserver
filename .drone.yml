@@ -22,3 +22,13 @@ pipeline:
     commands:
       - docker login -u johnad186 -p $PASS
       - docker push johnad186/example-webserver
+
+
+  deploy:
+    image: docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - docker pull johnad186/example-webserver
+      - docker stack deploy -c ./docker-compose.yml example-webserver
+
