@@ -4,31 +4,26 @@ pipeline:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     commands:
-      - docker build -t johnad186/example-webserver .
-
+      - docker build -t johnAd186/example-webserver:$DRONE_COMMIT_SHA .
   test:
     image: docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    commands:
-      - docker run johnad186/example-webserver /test.sh
-
+  commands:
+    - docker run johnAd186/example-webserver:$DRONE_COMMIT_SHA /test.sh
   push:
     image: docker
-    environment:
-      - PASS=${HUB_PASS}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - PASS=${HUB_PASS}
     commands:
-      - docker login -u johnad186 -p $PASS
-      - docker push johnad186/example-webserver
-
-
+      - docker login -u johnAd186 -p $PASS
+      - docker push johnAd186/example-webserver:$DRONE_COMMIT_SHA
   deploy:
     image: docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     commands:
-      - docker pull johnad186/example-webserver
-      - docker stack deploy -c ./docker-compose.yml example-webserver
-
+      - docker pull johnAd186/example-webserver:$DRONE_COMMIT_SHA
+      - docker tag johnAd186/example-webserver:$DRONE_COMMIT_SHA johnAd186/example-webserver:latest
