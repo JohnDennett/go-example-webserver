@@ -12,3 +12,13 @@ pipeline:
       - /var/run/docker.sock:/var/run/docker.sock
     commands:
       - docker run johndennett/example-webserver /test.sh
+
+  push:
+    image: docker
+    environment:
+      - PASS=${HUB_PASS}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - docker login -u johnad186 -p $PASS
+      - docker push johnad186/example-webserver
