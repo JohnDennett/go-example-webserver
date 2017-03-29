@@ -32,4 +32,4 @@ pipeline:
       - /var/run/docker.sock:/var/run/docker.sock
     commands:
       - docker pull johnad186/example-webserver:$DRONE_COMMIT_SHA
-      - docker tag johnad186/example-webserver:$DRONE_COMMIT_SHA johnad186/example-webserver:latest
+      - docker tag johnad186/example-webserver:$DRONE_COMMIT_SHA johnad186/example-webserver:production
